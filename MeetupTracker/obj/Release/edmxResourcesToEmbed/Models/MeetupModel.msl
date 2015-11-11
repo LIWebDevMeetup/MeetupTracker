@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MeetupModelStoreContainer" CdmEntityContainer="MeetupModelContainer">
+    <EntitySetMapping Name="MeetupEvents">
+      <EntityTypeMapping TypeName="IsTypeOf(MeetupModel.MeetupEvent)">
+        <MappingFragment StoreEntitySet="MeetupEvents">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Attendees">
+      <EntityTypeMapping TypeName="IsTypeOf(MeetupModel.Attendee)">
+        <MappingFragment StoreEntitySet="Attendees">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="InviteDate" ColumnName="InviteDate" />
+          <ScalarProperty Name="Rsvp" ColumnName="Rsvp" />
+          <ScalarProperty Name="Attended" ColumnName="Attended" />
+          <ScalarProperty Name="InvitationCode" ColumnName="InvitationCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MeetupEventAttendee" TypeName="MeetupModel.MeetupEventAttendee" StoreEntitySet="Attendees">
+      <EndProperty Name="MeetupEvent">
+        <ScalarProperty Name="Id" ColumnName="MeetupEvent_Id" />
+      </EndProperty>
+      <EndProperty Name="Attendee">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

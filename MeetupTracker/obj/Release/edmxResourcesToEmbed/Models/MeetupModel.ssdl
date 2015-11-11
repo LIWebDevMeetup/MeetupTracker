@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MeetupModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MeetupModelStoreContainer">
+    <EntitySet Name="MeetupEvents" EntityType="MeetupModel.Store.MeetupEvents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Attendees" EntityType="MeetupModel.Store.Attendees" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="MeetupEventAttendee" Association="MeetupModel.Store.MeetupEventAttendee">
+      <End Role="MeetupEvent" EntitySet="MeetupEvents" />
+      <End Role="Attendee" EntitySet="Attendees" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="MeetupEvents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EventDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Attendees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Company" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="InviteDate" Type="datetime" Nullable="false" />
+    <Property Name="Rsvp" Type="bit" Nullable="true" />
+    <Property Name="Attended" Type="bit" Nullable="true" />
+    <Property Name="InvitationCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MeetupEvent_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="MeetupEventAttendee">
+    <End Role="MeetupEvent" Type="MeetupModel.Store.MeetupEvents" Multiplicity="1" />
+    <End Role="Attendee" Type="MeetupModel.Store.Attendees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MeetupEvent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Attendee">
+        <PropertyRef Name="MeetupEvent_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

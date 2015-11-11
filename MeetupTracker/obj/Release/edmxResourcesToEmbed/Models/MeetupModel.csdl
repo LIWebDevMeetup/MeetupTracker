@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MeetupModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="MeetupModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="MeetupEvents" EntityType="MeetupModel.MeetupEvent" />
+    <EntitySet Name="Attendees" EntityType="MeetupModel.Attendee" />
+    <AssociationSet Name="MeetupEventAttendee" Association="MeetupModel.MeetupEventAttendee">
+      <End Role="MeetupEvent" EntitySet="MeetupEvents" />
+      <End Role="Attendee" EntitySet="Attendees" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="MeetupEvent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" />
+    <Property Name="Location" Type="String" Nullable="false" />
+    <Property Name="EventDate" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Attendees" Relationship="MeetupModel.MeetupEventAttendee" FromRole="MeetupEvent" ToRole="Attendee" />
+  </EntityType>
+  <EntityType Name="Attendee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" Nullable="false" />
+    <Property Name="Company" Type="String" Nullable="true" />
+    <Property Name="EmailAddress" Type="String" Nullable="false" />
+    <Property Name="InviteDate" Type="DateTime" Nullable="false" />
+    <Property Name="Rsvp" Type="Boolean" Nullable="true" />
+    <Property Name="Attended" Type="Boolean" Nullable="true" />
+    <NavigationProperty Name="MeetupEvent" Relationship="MeetupModel.MeetupEventAttendee" FromRole="Attendee" ToRole="MeetupEvent" />
+    <Property Name="InvitationCode" Type="String" Nullable="false" />
+  </EntityType>
+  <Association Name="MeetupEventAttendee">
+    <End Type="MeetupModel.MeetupEvent" Role="MeetupEvent" Multiplicity="1" />
+    <End Type="MeetupModel.Attendee" Role="Attendee" Multiplicity="*" />
+  </Association>
+</Schema>
